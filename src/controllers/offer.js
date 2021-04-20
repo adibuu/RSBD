@@ -3,7 +3,7 @@ const createError = require("../utils/createError");
 
 exports.getOffers = async (req, res, next) => {
   try {
-    const offers = await Offer.find({});
+    const offers = await Offer.find({}).populate("servicer").exec();
     if (!offers) {
       createError("Could not find offers", 404);
     }
@@ -18,7 +18,9 @@ exports.getOffers = async (req, res, next) => {
 
 exports.getOffer = async (req, res, next) => {
   try {
-    const offer = await Offer.findById(req.params.offerId);
+    const offer = await Offer.findById(req.params.offerId)
+      .populate("servicer")
+      .exec();
     if (!offer) {
       createError("Could not find offer", 404);
     }
