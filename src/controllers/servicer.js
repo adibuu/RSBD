@@ -30,3 +30,22 @@ exports.getServicer = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getServicersByType = async (req, res, next) => {
+  try {
+    const servicers = await Servicer.find({
+      serviceType: req.params.serviceType,
+    }).exec();
+
+    if (!servicers) {
+      createError("Could not find servicers", 404);
+    }
+
+    return res.send(servicers);
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
+};

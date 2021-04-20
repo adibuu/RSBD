@@ -32,3 +32,24 @@ exports.getOffer = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getOffersByServicer = async (req, res, next) => {
+  try {
+    const offers = await Offer.find({
+      servicer: req.params.servicerId,
+    })
+      .populate("servicer")
+      .exec();
+
+    if (!offers) {
+      createError("Could not find offers", 404);
+    }
+
+    return res.send(offers);
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
+};
