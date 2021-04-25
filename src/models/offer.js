@@ -6,16 +6,17 @@ const offerSchema = new mongoose.Schema({
     ref: "Servicer",
     required: true,
   },
-  name: {
+  serviceType: {
     type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: Number,
+    enum: [
+      "ubezpieczenie",
+      "usługi sprzątające",
+      "wywóz śmieci",
+      "dostawa gazu",
+      "dostawa energi elektrycznej",
+      "dostawa wody",
+      "usługi remontowe",
+    ],
     required: true,
   },
 });

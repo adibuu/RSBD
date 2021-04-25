@@ -13,12 +13,10 @@ const AdminBroExpress = require("@admin-bro/express");
 const AdminBroMongoose = require("@admin-bro/mongoose");
 
 AdminBro.registerAdapter(AdminBroMongoose);
-
 const adminBro = new AdminBro({
   resources: [Servicer, Offer],
   rootPath: "/admin",
 });
-
 const router = AdminBroExpress.buildRouter(adminBro);
 
 const app = express();
