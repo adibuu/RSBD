@@ -95,3 +95,23 @@ exports.getOffersRaportCleaning = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getOffersRaportGarbage = async (req, res, next) => {
+  try {
+    const offers = await Offer.find(
+      { serviceType: "wywóz śmieci" },
+      { _id: 0, priceForOneTon: 1 }
+    )
+      .populate("servicer", { name: 1, _id: 0 })
+      .exec();
+    if (!offers) {
+      createError("Could not find offers", 404);
+    }
+    return res.send(offers);
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
+};
