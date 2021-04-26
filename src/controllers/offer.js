@@ -74,3 +74,24 @@ exports.getOffersRaportInsurance = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getOffersRaportCleaning = async (req, res, next) => {
+  try {
+    const offers = await Offer.find(
+      { serviceType: "usługi sprzątające" },
+      { _id: 0, pricePerSquareMeter: 1, serviceScope: 1 }
+    )
+      .sort({ pricePerSquareMeter: 1 })
+      .populate("servicer", { name: 1, _id: 0 })
+      .exec();
+    if (!offers) {
+      createError("Could not find offers", 404);
+    }
+    return res.send(offers);
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
+};
