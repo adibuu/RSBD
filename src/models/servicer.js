@@ -12,7 +12,7 @@ const servicerSchema = new mongoose.Schema({
       "usługi sprzątające",
       "wywóz śmieci",
       "dostawa gazu",
-      "dostawa energi-elektrycznej",
+      "dostawa energii elektrycznej",
       "dostawa wody",
       "usługi remontowe",
     ],
