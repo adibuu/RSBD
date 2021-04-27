@@ -115,3 +115,24 @@ exports.getOffersRaportGarbage = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getOffersRaportRenovation = async (req, res, next) => {
+  try {
+    const offers = await Offer.find(
+      { serviceType: "usługi remontowe" },
+      { _id: 0, oneTimePrice: 1, pricePerSquareMeter: 1, serviceScope: 1 }
+    )
+      .sort({ oneTimePrice: 1 })
+      .populate("servicer", { name: 1, _id: 0 })
+      .exec();
+    if (!offers) {
+      createError("Could not find offers", 404);
+    }
+    return res.send(offers);
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
+};

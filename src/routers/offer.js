@@ -6,6 +6,7 @@ const {
   getOffersRaportInsurance,
   getOffersRaportCleaning,
   getOffersRaportGarbage,
+  getOffersRaportRenovation,
 } = require("../controllers/offer");
 
 const router = express.Router();
@@ -16,5 +17,6 @@ router.get("/offers/servicer/:servicerId", getOffersByServicer);
 router.get("/offers/raport/insurance", getOffersRaportInsurance);
 router.get("/offers/raport/cleaning", getOffersRaportCleaning);
 router.get("/offers/raport/garbage", getOffersRaportGarbage);
+router.get("/offers/raport/renovation", getOffersRaportRenovation);
 
 module.exports = router;
