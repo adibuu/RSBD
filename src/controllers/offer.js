@@ -136,3 +136,66 @@ exports.getOffersRaportRenovation = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getOffersRaportWater = async (req, res, next) => {
+  try {
+    const offers = await Offer.find(
+      { serviceType: "dostawa wody" },
+      { _id: 0, pricePerCubicMeter: 1, pricePerLiter: 1, serviceScope: 1 }
+    )
+      .sort({ pricePerLiter: 1 })
+      .populate("servicer", { name: 1, _id: 0 })
+      .exec();
+    if (!offers) {
+      createError("Could not find offers", 404);
+    }
+    return res.send(offers);
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
+};
+
+exports.getOffersRaportGas = async (req, res, next) => {
+  try {
+    const offers = await Offer.find(
+      { serviceType: "dostawa gazu" },
+      { _id: 0, pricePerCubicMeter: 1, pricePerCBootle: 1, serviceScope: 1 }
+    )
+      .sort({ pricePerCBootle: 1 })
+      .populate("servicer", { name: 1, _id: 0 })
+      .exec();
+    if (!offers) {
+      createError("Could not find offers", 404);
+    }
+    return res.send(offers);
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
+};
+
+exports.getOffersRaportElectricity = async (req, res, next) => {
+  try {
+    const offers = await Offer.find(
+      { serviceType: "dostawa energii elektrycznej" },
+      { _id: 0, pricePerMonth: 1, pricePerkWh: 1, serviceScope: 1 }
+    )
+      .sort({ pricePerMonth: 1 })
+      .populate("servicer", { name: 1, _id: 0 })
+      .exec();
+    if (!offers) {
+      createError("Could not find offers", 404);
+    }
+    return res.send(offers);
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
+};
